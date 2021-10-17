@@ -11,7 +11,7 @@ services:
             context: .
             dockerfile: ./docker/nginx/Dockerfile
         environment:
-            - VIRTUAL_HOST=aion.localhost
+            - VIRTUAL_HOST=thalia.localhost
     ui:
         build:
             context: .
