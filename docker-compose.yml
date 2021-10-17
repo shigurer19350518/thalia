@@ -12,17 +12,30 @@ services:
             dockerfile: ./docker/nginx/Dockerfile
         environment:
             - VIRTUAL_HOST=aion.localhost
-    web:
+    ui:
         build:
             context: .
             dockerfile: ./docker/ui/Dockerfile
         volumes:
             - ./ui:/var/www/html
         tty: true
+    relay:
+        build:
+            context: .
+            dockerfile: ./docker/relay/Dockerfile
+        volumes:
+            - ./relay:/var/www/html
+        tty: true
     app:
         build:
             context: .
             dockerfile: ./docker/app/Dockerfile
+            target: 'develop-stage'
         volumes:
-            - ./app:/var/www/html
+            - ./app:/app
+            - cargo-cache:/usr/local/cargo/registry
+            - target-cache:/app/target
         tty: true
+volumes:
+    cargo-cache:
+    target-cache:

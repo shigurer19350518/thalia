@@ -1,5 +1,4 @@
-FROM node:latest
-
-RUN npm i -g @nestjs/cli
-
-WORKDIR /var/www/html
+FROM rust:latest as develop-stage
+WORKDIR /app
+RUN cargo install cargo-watch
+COPY ./app .
