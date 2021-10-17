@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+    proxy:
+        image: jwilder/nginx-proxy
+        ports:
+          - "80:80"
+        volumes:
+          - /var/run/docker.sock:/tmp/docker.sock:ro
+    nginx:
+        build:
+            context: .
+            dockerfile: ./docker/nginx/Dockerfile
+        environment:
+            - VIRTUAL_HOST=aion.localhost
+    web:
+        build:
+            context: .
+            dockerfile: ./docker/ui/Dockerfile
+        volumes:
+            - ./ui:/var/www/html
+        tty: true
+    app:
+        build:
+            context: .
+            dockerfile: ./docker/app/Dockerfile
+        volumes:
+            - ./app:/var/www/html
+        tty: true
